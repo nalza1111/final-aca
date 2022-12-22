@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body *{
+            margin : 10px;
+            border : 1px solid blue;
+        }
+    </style>
+</head>
+<body>
+    <form onclick="bublingHandler(event)">
+        form
+        <div onclick="bublingHandler(event)">
+            div
+            <p onclick="bublingHandler(event)">
+                p
+                <a href="https://www.naver.com">네이버</a>
+            </p>
+        </div>
+    </form>
+    <script>
+        // 이벤트 : 예측할 수도 없고 제어할 수 없는 사건
+        //         => 이벤트 핸들러를 통해 제어가능(function의 형태를 바인딩..이벤트바인딩)
+        // 이벤트 전파... 캡처링과 버블링 두종류(캡처링은 주로 쓰진 않음)
+        // 캡처링 : 위 -> 아래
+        // const captureHandler = function(e){
+        //     console.log(e.target);
+        // }
+
+        // document.querySelector('form').addEventListener('click dbclick', captureHandler, true)
+        // document.querySelector('div').addEventListener('click', captureHandler, true)
+        // document.querySelector('p').addEventListener('click', captureHandler, true)
+
+        // addEventListener(EventList, EventHandelr, true)
+
+        // 버블링 : 아래 -> 위
+
+        const bublingHandler = function(e){
+            // if(e.target.tagName == 'DIV'){ //div에서 이벤트가 발생한 경우
+            //     alert(e.currentTarget.tagName)
+            // }
+            if(e.currentTarget.tagName == 'DIV'){ //버블링위로..div가 없어서 안됨(form은)
+                alert(e.currentTarget.tagName+' 지금 동작하는 태그는 div') 
+            }
+        }
+        // 이벤트 핸들러 제어
+        document.querySelector('a').addEventListener('click', function(event){
+            //event.preventDefault();
+            alert('현재 a태그를 선택했습니다.');
+            event.stopPropagation();
+        });
+    </script>
+    <script>
+        // 이벤트 거는 법
+        //1. on click ... 인라인방식
+        //복수의 이벤트를 걸 수 있음
+        //컴파일이 따로 됨(html<->js)..지향해왔으나
+        //Angular/React/Vue.js와 같은 프레임워크/라이브러리에서는 인라인 이벤트 핸들러 방식으로 이벤트를 처리
+        //기존은 html css js를 따로 컴파일 했으나 프레임워크는 통으로 컴파일해서 인라인방식사용해도 무리x
+        
+        //2. document.getEelement
+        //객체.onclick = fucntion 방식.. but 복수의 이벤트를 사용 할 수 없음 = 덮어쓰기해버림
+
+        //3. addEventListener()
+
+        //target : 실제로 이벤트 발생 태그
+        //currentTarget : 지금 이벤트 핸들러 동작 태그
+        
+        //preventDefault() : 기본 이벤트 핸들러 중지
+        //stopPropagtion() : 이벤트 전파 중지
+
+    </script>
+</body>
+</html>

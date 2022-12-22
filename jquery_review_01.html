@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <style>
+        .red{ color : #ff0000; }
+        .blue{ color : #0000ff; }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Cities</h1>
+        <ul>
+            <li id="one" class="red">Seoul</li>
+            <li id="two" class="red">London</li>
+            <li id="three" class="red">NewYork</li>
+            <li id="four" name="japan">Tokyo</li>
+        </ul>
+    </div>
+    <script>
+        // 요소 검색 $() -> # . []..속성 
+        //[name = ]
+        let liTag = $('#one');
+        //jquery는 객체형태로 가져오기 때문에 직접 접근x
+        //접근하려면 메소드형태로 접근()
+        console.log(liTag.text());
+        liTag.removeClass(); //전체삭제
+        liTag.removeClass('red'); //전체삭제
+        liTag.addClass('blue');
+
+        liTag = $('li.red');
+        console.log(liTag);
+        liTag.text('새로운 값')
+
+        liTag = $('li[name="japan"]');
+        liTag.css('background-color','green');
+
+        // 요소탐색
+        liTag = $('h1').next().children(':last-child');
+        console.log(liTag);
+
+        // 부모 : parent(), 형제 : prev(), next(), 자식:children()
+
+        // 요소 속성 변경
+        // attr => attribute => HTML 속성(정적)
+        // prop => property => DOM 속성 => 이거 사용 추천
+
+        let liList = $('li'); //간혹 노드로 들어올 때 $(liList)로 감싸버림
+        console.log(liList);
+        liList.each(function(idx, tag){
+            console.log(idx);
+            console.log(tag); // 자바스크립트의 노드
+            console.log($(tag)); // 제이쿼리로 사용하려면 감싸주기
+
+            //$(tag).attr('name','aa~~aa') // 이건 나옴
+            $(tag).prop('name', 'new'); // 콘솔에서 검색시 > $('li').prop('name') new 나옴
+            console.log($(tag));
+        })
+        // value, css, text, html . . .
+        // 요소 생성 및 추가
+        let pTag = $('<p/>');
+        pTag.text('새로운 태그');
+        pTag.css('color','green');
+        
+        $('div').append(pTag);
+
+        $('div').append(
+            $('<p/>').text('한줄로 태그 생성 및 등록').css('color','yellow')
+        );
+        $('div').append($('<p style="color: red;">태그생성<p/>'));
+    </script>
+    
+</body>
+</html>

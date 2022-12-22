@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul id="post-list">
+        <li id="post-1">Item 1</li>
+        <li id="post-2">Item 2</li>
+        <li id="post-3">Item 3</li>
+        <li id="post-4">Item 4</li>
+        <li id="post-5">Item 5</li>
+        <li id="post-6">Item 6</li>
+    </ul>
+    <button id="btn">li 태그</button>
+    <script>
+        // 개별 태그에 이벤트 핸들러 등록
+         let liList = document.querySelectorAll('li');
+        
+        // [... liList].forEach(function(tag, idx){
+        //     tag.addEventListener('click', function(){
+        //         console.log(this);
+        //         this.style.color = 'orange';
+        //     })
+        // });
+
+        // 동적추가 li는 위의 이벤트등록이 안됨..
+
+        // ul태그에 걸어줌 => 이벤트위임
+         let ulTag = document.querySelector('#post-list');
+
+        // ulTag.addEventListener('click', function(e){
+        //     if(e.target.tagName == 'LI'){
+        //         this.style.color = 'orange';
+        //         console.log(this);
+        //     }
+        // })
+        btn.addEventListener('click', function(){
+            let liTag = document.createElement('li');
+            let txt = document.createTextNode('tt');
+            liTag.append(txt);
+            document.getElementById('post-list').appendChild(liTag);
+        });
+        ulTag.addEventListener('click', function(e){
+                e.target.style.color = 'orange';
+            })
+        // (function test(){
+        //     ulTag.addEventListener('click', [... liList], function(e){
+        //         [... liList].forEach(function(tag, idx){
+        //         tag.addEventListener('click', function(){
+        //             console.log(this);
+        //             this.style.color = 'orange';
+        //         })
+        //  });
+        //     })
+        //})();
+    </script>
+</body>
+</html>

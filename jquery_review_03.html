@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+    <script>
+        $.ajax({
+            url : '',                // 경로
+            method : '',             // 통신방식 get(default), post, put, delete,...
+            dataType : '',           // 반환되는 값 타입
+            contentType : '',        // 보내는 값 타입
+            data : {},               // 보내는 값
+            success : function(){       // 통신이 성공했을 때
+
+            },
+            error : function(error){    // 통신이 실패했을 때
+
+            },
+            beforeSend : function(){},  // 통신을 시작하기 전에 진행하는 작업..CORS때문에 사용
+            async : ''                  // 동기통신 <-> 비동기통신(default/true)
+        });
+        $.ajax({
+            url : 'http://192.168.0.91/myserver/empSelect',
+            dataType : 'json', // 파싱용.. 안써도 되지만(json text xml을 제이쿼리가 자동파싱)..가독성을 위해 작성추천
+            success : function(data){
+                console.log(data);
+                let table = $('<table />');
+                let thead = $('<thead />');
+                let tbody = $('<tbody />');
+                
+                //머리만들기
+                let tr = $('<tr/>');
+                for( let ix in data[0]){
+                    tr.append('<th>'+ix+'</th>')
+                }
+                thead.append(tr);
+                //몸만들기
+                $.each(data, function(idx, row){ //$(data).each()
+                    tr = $('<tr/>');
+                    for(let i in row){
+                        tr.append('<td>'+row[i]+'</td>');
+                    }
+                    tbody.append(tr);
+                });
+                //테이블
+                table.append(thead, tbody);
+                $('#app').append(table);
+            },
+            error : function(reject){
+                console.log(reject);
+            }
+        })
+        $.ajax({
+            url : 'http://192.168.0.91/myserver/empInsert',
+            method : 'post',
+            contentType : 'application/json', //무슨 프레임워크든 동일 네트워크통신약속
+            data : JSON.stringify({ 'employee_id' : '234',
+                                    'first_name' : 'Kil-Dong',
+                                    'last_name' : 'Hong',
+                                    'email' : 'kㄴㄴ',
+                                    'hire_date' : '2022-12-22',
+                                    'job_id' : 'IT_PROG'}), //인코딩 후 보냄
+            dataType : '',
+            success : function(data){
+                console.log(data);
+            },
+            error : function(reject){
+                console.log(reject);
+            }
+        })
+    </script>
+</body>
+</html>

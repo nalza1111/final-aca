@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app"></div>
+    <script>
+        fetch('http://192.168.0.91/myserver/empSelect')
+          .then(response => response.json())
+          .then(data => {
+            // 테이블 생성
+            let tableTag = document.createElement('table');
+            // 테이블 헤더 생성
+            let theaderTag = document.createElement('thead');
+            let trTag = document.createElement('tr');
+            for(let field in data[0]){
+                let thTag = document.createElement('th');
+                thTag.textContent = field;
+                trTag.appendChild(thTag);
+            }
+            theaderTag.appendChild(trTag);
+            tableTag.appendChild(theaderTag);
+            // 테이블 바디 생성
+            
+            let tbodyTag = document.createElement('tbody');
+            [... data].forEach(function(obj, idx){
+                trTag = document.createElement('tr');
+                // td생성
+                for(let field in data[0]){
+                    let tdTag = document.createElement('td');
+                    tdTag.textContent = obj[field];
+                    trTag.appendChild(tdTag);
+                }
+                tbodyTag.appendChild(trTag);
+            });
+            tableTag.appendChild(tbodyTag);
+            document.getElementById('app').appendChild(tableTag);
+            // DOM에 등록
+          });
+
+        fetch('http://192.168.0.91/myserver/empInsert', {
+            method : 'POST',
+            headers : {
+                'Content-Type' : 'application/json'
+            },
+            body : JSON.stringify({'employee_id' : '11',
+                                    'first_name' : 'Kil-Dong44',
+                                    'last_name' : 'Hong44',
+                                    'email' : 'k11',
+                                    'hire_date' : '2022-12-22',
+                                    'job_id' : 'IT_PROG'})
+        })
+          .then(response => response.json())
+          .then(data => console.log(data));
+    </script>
+</body>
+</html>

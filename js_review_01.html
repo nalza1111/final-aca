@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .red{ color : #ff0000; }
+        .blue{ color : #0000ff; }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Cities</h1>
+        <ul>
+            <li id="one" class="red">Seoul</li>
+            <li id="two" class="red">London</li>
+            <li id="three" class="red">NewYork</li>
+            <li id="four" name="japan">Tokyo</li>
+        </ul>
+    </div>
+    <script>
+        // 요소 검색 - 1. 결과가 하나인 경우
+        const tagId = document.getElementById('one');
+        tagId.className = 'blue';
+
+        const tagQueryOne = document.querySelector('li.red');// 여러개 나와도 처음만 반환
+        console.log(tagQueryOne);
+        
+        // 요소검색 -2. 결과가 복수인 경우
+        const tagName = document.getElementsByName('japan')
+        console.log(tagName[0].textContent);
+
+        const tagClassName = document.getElementsByClassName('red');
+        for (let i = 0; i < tagClassName.length; i++ ){
+            console.log(tagClassName[i].textContent);
+        }
+
+        const tagNameList = document.getElementsByTagName('li');
+        for ( let i=0; i<tagNameList.length; i++ ){
+            console.log(tagNameList[i]);
+        }
+        
+        // 선택자
+        const tagQueryAll = document.querySelectorAll('li.red');
+        console.log(tagQueryAll);
+
+        // 요소 탐색
+        let h1Tag = document.getElementsByTagName('h1');
+        console.log(h1Tag); // 배열로 들고 옴
+        console.log(h1Tag[0]);
+        let childList = h1Tag[0].nextElementSibling.children; // 텍스트요소를 제외하고 ele~먼트요소가져옴
+        console.log(childList[3]);
+        console.log(childList[childList.length-1]);
+
+        let lastChild = h1Tag[0].nextElementSibling.lastElementChild;
+        console.log(lastChild.textContent);
+
+        // 요소의 속성 수정 변경
+        let liTags = document.getElementsByTagName('li');
+        
+        for( let i = 0; i < liTags.length; i++){
+            liTags[i].setAttribute('name','Array');
+        }
+        let liList = document.querySelectorAll('[name="Array"]');
+        console.log(liList);
+        
+        // id, className, innerHTML, innerText, textContent
+
+        let str = '<h3>Hello World!</h3>'
+
+        // 요소 생성 및 추가 => 동적으로 생성한 건 탐색이 안됨 하려면 기존
+        // DOM에 붙여놔야 함
+        let pTag = document.createElement('p');
+        pTag.textContent = '새로운 태그 등록';
+        pTag.style.color = 'green';
+        document.querySelector('div').appendChild(pTag);
+    </script>
+</body>
+</html>
